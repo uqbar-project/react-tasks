@@ -2,13 +2,11 @@ import React from "react"
 import { CgCloseO } from 'react-icons/cg';
 
 export class TaskList extends React.Component {
-  setFilter = event => { }
-
   render() {
-    const { tasks, onDeleteTask } = this.props
+    const { tasks, onDeleteTask, onChangeFilter } = this.props
     return (
       <div className="TaskList">
-        <TaskFilter onChange={this.setFilter} />
+        <TaskFilter onChange={onChangeFilter} />
         {tasks.map(task => <Task key={task.id} task={task} onDelete={onDeleteTask} />)}
       </div>
     )
@@ -16,13 +14,16 @@ export class TaskList extends React.Component {
 }
 
 class TaskFilter extends React.Component {
-  onKeyPress = event => {
+  state = { filterText: '' }
+
+  setFilter = event => {
     const { onChange } = this.props
+    this.setState({ filterText: event.target.value }, () => onChange(this.state.filterText))
   }
 
   render() {
     return (
-      <input type="search" onKeyPress={this.onKeyPress} />
+      <input type="search" value={this.state.filterText} onChange={this.setFilter} />
     )
   }
 }
