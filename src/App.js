@@ -1,22 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
 
-const tasks = [
-  { id: 1, text: "Armar charla de React" },
-  { id: 2, text: "Pasarla a inglés o francés" },
-  { id: 3, text: "No comprometerse a dar charlas en el futuro" }
-]
+import { TaskList } from './TaskList.js'
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      {tasks.map(task => <Task id={task.id} task={task} />)}
-    </div>
-  );
+const loadTasks = async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000))
+  return [
+    { id: 1, text: "Armar charla de React" },
+    { id: 2, text: "Pasarla a inglés o francés" },
+    { id: 3, text: "No comprometerse a dar charlas en el futuro" }
+  ]
 }
 
-function Task({ task }) {
-  return (<div className="Task">{task.text}</div>)
+class App extends React.Component {
+  state = {}
+
+  async componentDidMount() {
+    const tasks = await loadTasks()
+    this.setState({ tasks })
+  }
+
+  onDeleteTask = (task) => {
+    this.setState({
+      tasks: this.state.tasks.filter(({ id }) => task.id !== id)
+    })
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {this.state.tasks ?
+          <TaskList tasks={this.state.tasks} onDeleteTask={this.onDeleteTask} />
+          : <div>Waiting for backend</div>}
+      </div>
+    );
+  }
 }
 
-export default App;
+export default App
