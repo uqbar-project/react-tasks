@@ -1,16 +1,8 @@
 import React from "react"
 
-import { TaskList } from './TaskList.js'
+import { createTask, loadTasks } from './tasks.js'
+import { TaskList, AddTaskForm } from './TaskList.js'
 import './App.css'
-
-const loadTasks = async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  return [
-    { id: 1, text: "Armar charla de React" },
-    { id: 2, text: "Pasarla a inglés o francés" },
-    { id: 3, text: "No comprometerse a dar charlas en el futuro" }
-  ]
-}
 
 class App extends React.Component {
   state = { filterText: '' }
@@ -18,6 +10,11 @@ class App extends React.Component {
   async componentDidMount() {
     const tasks = await loadTasks()
     this.setState({ tasks })
+  }
+
+  addTask = async (taskDescription) => {
+    const newTask = await createTask(taskDescription)
+    this.setState(({ tasks }) => ({ tasks: [newTask, ...tasks] }))
   }
 
   deleteTask = (task) => {
@@ -35,6 +32,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <AddTaskForm onAddTask={this.addTask} />
         {this.state.tasks ?
           <TaskList
             tasks={this.getVisibleTasks()}

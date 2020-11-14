@@ -44,3 +44,30 @@ class Task extends React.Component {
     )
   }
 }
+
+export class AddTaskForm extends React.Component {
+  state = { text: '' }
+  submitForm = event => {
+    event.preventDefault()
+
+    if (this.state.text.length > 0) {
+      this.props.onAddTask(this.state)
+      this.setState({ text: '' })
+    }
+  }
+
+  updateText = event => {
+    this.setState({ text: event.target.value })
+  }
+
+  render() {
+    const { text } = this.state
+
+    return (
+      <form onSubmit={this.submitForm}>
+        <input type="text" value={text} onChange={this.updateText} />
+        <button type="submit" >Add Task</button>
+      </form>
+    )
+  }
+}
