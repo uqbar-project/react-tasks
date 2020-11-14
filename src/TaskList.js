@@ -1,5 +1,4 @@
 import React from "react"
-import { CgCloseO } from 'react-icons/cg';
 
 export class TaskList extends React.Component {
   render() {
@@ -39,7 +38,7 @@ class Task extends React.Component {
     return (
       <div className="Task">
         <span>{task.text}</span>
-        <a onClick={this.delete}><CgCloseO /></a>
+        <button type="button" onClick={this.delete}>x</button>
       </div>
     )
   }
