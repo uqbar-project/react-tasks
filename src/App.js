@@ -14,7 +14,7 @@ class App extends React.Component {
 
   addTask = async (taskDescription) => {
     const newTask = await createTask(taskDescription)
-    this.setState(({ tasks }) => ({ tasks: [newTask, ...tasks] }))
+    this.setState(({ tasks }) => ({ tasks: [...tasks, newTask] }))
   }
 
   deleteTask = (task) => {
@@ -30,17 +30,16 @@ class App extends React.Component {
   getVisibleTasks = () => this.state.tasks.filter(task => task.text.includes(this.state.filterText))
 
   render() {
-    return (
-      <div className="App">
+    return (this.state.tasks
+      ? <div className="App">
+        <TaskList
+          tasks={this.getVisibleTasks()}
+          onChangeFilter={this.changeFilter}
+          onDeleteTask={this.deleteTask}
+        />
         <AddTaskForm onAddTask={this.addTask} />
-        {this.state.tasks ?
-          <TaskList
-            tasks={this.getVisibleTasks()}
-            onChangeFilter={this.changeFilter}
-            onDeleteTask={this.deleteTask}
-          />
-          : <div>Waiting for backend</div>}
       </div>
+      : <div className="Loader"/>
     );
   }
 }
