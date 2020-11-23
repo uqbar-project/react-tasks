@@ -5,7 +5,10 @@ export class TaskList extends React.Component {
     const { tasks, onDeleteTask, onChangeFilter } = this.props
     return (
       <div className="TaskList">
-        <TaskFilter onChange={onChangeFilter} />
+        <h1>
+          <span>Tasks</span>
+          <TaskFilter onChange={onChangeFilter} />
+        </h1>
         {tasks.map(task => <Task key={task.id} task={task} onDelete={onDeleteTask} />)}
       </div>
     )
@@ -22,7 +25,9 @@ class TaskFilter extends React.Component {
 
   render() {
     return (
-      <input type="search" value={this.state.filterText} onChange={this.setFilter} />
+      <div className="TaskFilter">
+        <input type="search" value={this.state.filterText} onChange={this.setFilter} />
+      </div>
     )
   }
 }
@@ -38,7 +43,7 @@ class Task extends React.Component {
     return (
       <div className="Task">
         <span>{task.text}</span>
-        <button type="button" onClick={this.delete}>x</button>
+        <button type="button" onClick={this.delete} />
       </div>
     )
   }
@@ -63,9 +68,9 @@ export class AddTaskForm extends React.Component {
     const { text } = this.state
 
     return (
-      <form onSubmit={this.submitForm}>
+      <form className="AddTaskForm" onSubmit={this.submitForm}>
         <input type="text" value={text} onChange={this.updateText} />
-        <button type="submit" >Add Task</button>
+        <button disabled={text.trim() === ""} type="submit" />
       </form>
     )
   }
