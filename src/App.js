@@ -18,6 +18,7 @@ class App extends React.Component {
   }
 
   deleteTask = (task) => {
+    await deleteTask(task.id)
     this.setState({
       tasks: this.state.tasks.filter(({ id }) => task.id !== id)
     })
@@ -39,7 +40,7 @@ class App extends React.Component {
         />
         <AddTaskForm onAddTask={this.addTask} />
       </div>
-      : <div className="Loader"/>
+      : <div className="Loader" />
     );
   }
 }
