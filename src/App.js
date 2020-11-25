@@ -1,20 +1,23 @@
 import React from "react"
 
-import './App.css'
+import { loadTasks } from './tasks.js'
 import { TaskList } from "./TaskList"
-
-const tasks = [
-  { id: 1, text: "Armar charla de React" },
-  { id: 2, text: "Pasarla a inglés o francés" },
-  { id: 3, text: "No comprometerse a dar charlas en el futuro" }
-]
+import './App.css'
 
 class App extends React.Component {
+  state = {}
+
+  async componentDidMount() {
+    const tasks = await loadTasks()
+    this.setState({ tasks })
+  }
+
   render() {
-    return (
+    return (this.state.tasks ?
       <div className="App">
-        <TaskList tasks={tasks} />
+        <TaskList tasks={this.state.tasks} />
       </div>
+      : <div className="Loader" />
     )
   }
 }
