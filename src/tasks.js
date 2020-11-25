@@ -7,7 +7,7 @@ let nextTaskId = tasks.length + 1
 
 export const loadTasks = async () => {
   await new Promise(resolve => setTimeout(resolve, 3000))
-  return tasks
+  return [...tasks]
 }
 
 export const createTask = (taskDescription) => {

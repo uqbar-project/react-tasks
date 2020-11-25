@@ -1,7 +1,7 @@
 import React from "react"
 
 import { loadTasks, deleteTask, createTask } from './tasks.js'
-import { TaskList } from "./TaskList"
+import { TaskList, AddTaskForm } from "./TaskList"
 import './App.css'
 
 class App extends React.Component {
