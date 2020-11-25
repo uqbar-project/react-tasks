@@ -1,6 +1,6 @@
 import React from "react"
 
-import { loadTasks, deleteTask } from './tasks.js'
+import { loadTasks, deleteTask, createTask } from './tasks.js'
 import { TaskList } from "./TaskList"
 import './App.css'
 
@@ -10,6 +10,11 @@ class App extends React.Component {
   async componentDidMount() {
     const tasks = await loadTasks()
     this.setState({ tasks })
+  }
+
+  addTask = async (taskDescription) => {
+    const newTask = await createTask(taskDescription)
+    this.setState(({ tasks }) => ({ tasks: [...tasks, newTask] }))
   }
 
   deleteTask = async (task) => {
@@ -32,6 +37,7 @@ class App extends React.Component {
           onChangeFilter={this.changeFilter}
           onDeleteTask={this.deleteTask}
         />
+        <AddTaskForm onAddTask={this.addTask} />
       </div>
       : <div className="Loader" />
     )
