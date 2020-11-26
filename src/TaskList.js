@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useCallback, memo } from "react"
 
 export class TaskList extends React.Component {
   render() {
@@ -15,24 +15,22 @@ export class TaskList extends React.Component {
   }
 }
 
-class TaskFilter extends React.Component {
-  state = { filterText: '' }
+const TaskFilter = memo(({ onChange }) => {
+  const [filterText, setFilterText] = useState('')
 
-  setFilter = event => {
-    const { onChange } = this.props
-    this.setState({ filterText: event.target.value }, () => onChange(this.state.filterText))
-  }
+  const setFilter = useCallback(event => {
+    setFilterText(event.target.value)
+    onChange(event.target.value)
+  }, [onChange])
 
-  render() {
-    return <div className="TaskFilter">
-      <input
-        type="search"
-        value={this.state.filterText}
-        onChange={this.setFilter}
-      />
-    </div>
-  }
-}
+  return <div className="TaskFilter">
+    <input
+      type="search"
+      value={filterText}
+      onChange={setFilter}
+    />
+  </div>
+})
 class Task extends React.Component {
   delete = () => {
     const { task, onDelete } = this.props
