@@ -1,7 +1,7 @@
 let tasks = [
-  { id: 1, text: "Armar charla de React" },
-  { id: 2, text: "Pasarla a inglés o francés" },
-  { id: 3, text: "No comprometerse a dar charlas en el futuro" }
+  { id: 1, text: "Organizar charla de React" },
+  { id: 2, text: "Preparar ejemplos" },
+  { id: 3, text: "Aprender a hablar francés" }
 ]
 let nextTaskId = tasks.length + 1
 
